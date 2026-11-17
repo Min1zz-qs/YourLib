@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title >Your Personal Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <h1>Ваша персональная библиотека</h1>
+
+    <form method="POST">
+        <input type="text" name="title" placeholder="Название книги *" required>
+        <input type="text" name="author" placeholder="Автор *" required>
+        <input type="text" name="isbn" placeholder="ISBN *" required>
+        <input type="text" name="inv_number" placeholder="Код книги *" required>
+        <input type="text" name="shelf_nameber" placeholder="Полка *" required>
+        <button type="submit">Добавить книгу</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Код</th>
+                <th>Название</th>
+                <th>Автор</th>
+                <th>ISBN</th>
+                <th>Полка</th>
+                <th>Статус</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.inv_number or '—'}}</td>
+                <td><strong>{{ book.title or '—'}}</strong></td>
+                <td><strong>{{ book.author or '—'}}</strong></td>
+                <td>{{ book.isbn or '—'}}</td>
+                <td>{{ book.shelf_nameber or '—'}}</td>
+                <td>{{ book.status }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" style="text-align: center; color: #777;">Такой книги пока нет. Добавте её!</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
