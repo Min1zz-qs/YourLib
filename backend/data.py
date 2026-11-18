@@ -48,12 +48,69 @@ def add_book(title, author, isbn, inv_number, shelf_number):
         """, (title, author, isbn, inv_number, shelf_number))
 
 
-def get_all_books():
+def get_all_books(
+    search="",
+    reading_status="",
+    copy_status="",
+    shelf_number="",
+    sort_by="id",
+    sort_order="desc"
+):
+
+    allowed_sort_fields = {
+        "id": "id",
+        "title": "title",
+        "author": "author",
+        "inv_number": "inv_number"
+    }
+
+    sort_column = allowed_sort_fields.get(sort_by, "id")
+    sort_direction = "ASC" if sort_order == "asc" else "DESC"
+
+    query = "SELECT * FROM books Where 1=1 "
+    params = []
+
+    if search:
+        query += """
+            AND (
+                 title LIKE ?
+                OR author LIKE ?
+                OR isbn LIKE ?
+                OR inv_number LIKE ?
+            )
+        """
+        value = f"%{search}%"
+        params.extend([value, value, value, value])
+
+    if reading_status:
+        query += "AND reading_status = ?"
+        params.append(reading_status)
+
+    if copy_status:
+        query += "AND copy_status = ?"
+        params.append(copy_status)
+
+    if shelf_number:
+        query += "AND shelf_number = ?"
+        params.append(shelf_number)
+
+    query += f" ORDER BY {sort_column} {sort_direction}"
+
     with get_connection() as conn:
-        return conn.execute("""
-            SELECT * FROM books
-            ORDER BY id DESC
+        return conn.execute(query, params).fetchall()
+
+def get_all_shelves():
+    with get_connection() as conn:
+        rows = conn.execute ("""
+            SELECT DISTINCT shelf_number
+            FROM books
+            WHERE shelf_number IS NOT NULL
+            AND shelf_number != ''
+            ORDER BY shelf_number
         """).fetchall()
+
+        return [row["shelf_number"] for row in rows]
+
 
 
 def get_book_by_id(book_id):
