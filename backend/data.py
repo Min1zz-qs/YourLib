@@ -14,7 +14,7 @@ def get_connection():
     try:
         yield conn
         conn.commit()
-    except Exception():
+    except Exception:
         conn.rollback()
         raise
     finally:
