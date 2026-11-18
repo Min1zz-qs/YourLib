@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование книги — YourLib</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <h1>Редактирование книги</h1>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        <input
+            type="text"
+            name="title"
+            value="{{ book.title }}"
+            placeholder="Название книги *"
+            required
+        >
+
+        <input
+            type="text"
+            name="author"
+            value="{{ book.author }}"
+            placeholder="Автор *"
+            required
+        >
+
+        <input
+            type="text"
+            name="isbn"
+            value="{{ book.isbn or '' }}"
+            placeholder="ISBN"
+        >
+
+        <input
+            type="text"
+            name="inv_number"
+            value="{{ book.inv_number }}"
+            placeholder="Инвентарный номер *"
+            required
+        >
+
+        <input
+            type="text"
+            name="shelf_number"
+            value="{{ book.shelf_number }}"
+            placeholder="Полка *"
+            required
+        >
+
+        <label for="reading_status">Статус чтения</label>
+        <select name="reading_status" id="reading_status">
+            {% for status in reading_statuses %}
+                <option
+                    value="{{ status }}"
+                    {% if book.reading_status == status %}selected{% endif %}
+                >
+                    {{ status }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="copy_status">Статус экземпляра</label>
+        <select name="copy_status" id="copy_status">
+            {% for status in copy_statuses %}
+                <option
+                    value="{{ status }}"
+                    {% if book.copy_status == status %}selected{% endif %}
+                >
+                    {{ status }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Сохранить изменения</button>
+    </form>
+
+    <p>
+        <a href="{{ url_for('index') }}">Вернуться к библиотеке</a>
+    </p>
+
+</body>
+</html>
