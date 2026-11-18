@@ -86,11 +86,49 @@ def index ():
                     error = "Книга с таким инвентарным номером уже существует."
                 else:
                     raise
-    books = data.get_all_books()
+
+    search = request.args.get("search", "").strip()
+    reading_status = request.args.get("reading_status", "")
+    copy_status = request.args.get("copy_status", "")
+    shelf_number = request.args.get("shelf_number", "")
+    sort_by = request.args.get("sort_by", "id")
+    sort_order = request.args.get("sort_order", "desc")
+
+    if reading_status not in READING_STATUSES:
+        reading_status = ""
+
+    if copy_status not in COPY_STATUSES:
+        copy_status = ""
+
+    if sort_by not in ["id", "title", "author", "inv_number"]:
+        sort_by = "id"
+
+    if sort_order not in ["asc", "desc"]:
+        sort_order = "desc"
+
+
+    books = data.get_all_books(
+        search=search,
+        reading_status=reading_status,
+        copy_status=copy_status,
+        shelf_number=shelf_number,
+        sort_by=sort_by,
+        sort_order=sort_order
+    )
+
     return render_template(
         "index.html",
         books = books,
-        error = error
+        error = error,
+        search = search,
+        selected_reading_status = reading_status,
+        selected_copy_status = copy_status,
+        slected_shelf_number = shelf_number,
+        shelves = data.get_all_shelves(),
+        sort_by = sort_by,
+        sort_order = sort_order,
+        reading_statuses = READING_STATUSES,
+        copy_statuses = COPY_STATUSES
     )
 
 @app.route("/book/<int:book_id>/edit", methods=["GET", "POST"])
