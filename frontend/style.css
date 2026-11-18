@@ -1,39 +1,55 @@
 body {
     font-family: sans-serif;
-    max-width: 900px;
+    max-width: 1100px;
     margin: 30px auto;
     padding: 0 15px;
     background: #f9f9f9;
 }
 
-form {
+h1 {
+    margin-bottom: 24px;
+}
+
+form:not(.inline-form) {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: grid;
     gap: 10px;
     grid-template-columns: 1fr 1fr;
 }
 
-input, button {
+input, button, .button {
+    box-sizing: border-box;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
 }
 
-button {
-    grid-column: span 2;
-    background: #2c3e50;
-    color: white;
-    border: none;
+button, .button {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
     cursor: pointer;
     font-weight: bold;
 }
 
-button:hover {
+form:not(.inline-form) > button {
+    grid-column: span 2;
+    background: #2c3e50;
+    color: white;
+    border: none;
+}
+
+form:not(.inline-form) > button:hover {
     background: #1a252f;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
 }
 
 table {
@@ -41,7 +57,7 @@ table {
     border-collapse: collapse;
     margin-top: 25px;
     background: #fff;
-    box-shadow: 0 2px 4px rgba (0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 th, td {
@@ -53,4 +69,79 @@ th, td {
 th {
     background: #2c3e50;
     color: white;
+}
+
+.actions {
+    white-space: nowrap;
+}
+
+.button--secondary {
+    background: #ecf0f1;
+    color: #2c3e50;
+    border-color: #d5dadd;
+}
+
+.button--secondary:hover {
+    background: #dfe5e8;
+}
+
+.inline-form {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.button--danger {
+    background: #a93226;
+    color: white;
+    border: none;
+}
+
+.button--danger:hover {
+    background: #922b21;
+}
+
+.empty-state {
+    text-align: center;
+    color: #777;
+}
+
+.error-message {
+    color: #a93226;
+}
+
+.help-text {
+    color: #666;
+    font-size: 13px;
+}
+
+.form-actions {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-actions > button {
+    background: #2c3e50;
+    color: white;
+    border: none;
+}
+
+@media (max-width: 600px) {
+    form:not(.inline-form) {
+        grid-template-columns: 1fr;
+    }
+
+    form:not(.inline-form) > button,
+    .form-actions {
+        grid-column: span 1;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование книги — YourLib</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <h1>Редактирование книги</h1>
+
+    {% if error %}
+        <p class="error-message">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('edit_book', book_id=book.id) }}">
+        <input
+            type="text"
+            name="title"
+            placeholder="Название книги *"
+            value="{{ book.title }}"
+            required
+        >
+        <input
+            type="text"
+            name="author"
+            placeholder="Автор *"
+            value="{{ book.author }}"
+            required
+        >
+        <input
+            type="text"
+            name="isbn"
+            placeholder="ISBN *"
+            value="{{ book.isbn or '' }}"
+            required
+        >
+        <input
+            type="text"
+            name="inv_number"
+            placeholder="Код книги *"
+            value="{{ book.inv_number or '' }}"
+            required
+        >
+        <input
+            type="text"
+            name="shelf_number"
+            placeholder="Полка *"
+            value="{{ book.shelf_number or '' }}"
+            required
+        >
+
+        <div class="form-actions">
+            <button type="submit">Сохранить изменения</button>
+            <a class="button button--secondary" href="{{ url_for('index') }}">Отмена</a>
+        </div>
+    </form>
+
+    <p class="help-text">Статус книги пока не редактируется.</p>
+</body>
+</html>
