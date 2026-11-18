@@ -5,6 +5,7 @@
     <title >Your Personal Library</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
+
 </head>
 
 <body>
@@ -16,7 +17,7 @@
         <input type="text" name="author" placeholder="Автор *" required>
         <input type="text" name="isbn" placeholder="ISBN *" required>
         <input type="text" name="inv_number" placeholder="Код книги *" required>
-        <input type="text" name="shelf_nameber" placeholder="Полка *" required>
+        <input type="text" name="shelf_number" placeholder="Полка *" required>
         <button type="submit">Добавить книгу</button>
     </form>
 
@@ -38,7 +39,7 @@
                 <td><strong>{{ book.title or '—'}}</strong></td>
                 <td><strong>{{ book.author or '—'}}</strong></td>
                 <td>{{ book.isbn or '—'}}</td>
-                <td>{{ book.shelf_nameber or '—'}}</td>
+                <td>{{ book.shelf_number or '—'}}</td>
                 <td>{{ book.status }}</td>
             </tr>
             {% else %}

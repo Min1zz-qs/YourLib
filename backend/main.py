@@ -15,10 +15,10 @@ def index ():
         author = request.form.get ("author")
         isbn = request.form.get ("isbn")
         inv_number = request.form.get ("inv_number")
-        shelf_nameber = request.form.get ("shelf_nameber")
+        shelf_number = request.form.get ("shelf_number")
 
         if title and author:
-            data.add_book(title, author, isbn, inv_number, shelf_nameber)
+            data.add_book(title, author, isbn, inv_number, shelf_number)
         return redirect (url_for("index"))
 
     books = data.get_all_books()

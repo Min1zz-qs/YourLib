@@ -5,6 +5,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, 'database', 'library.db')
 
 def get_connection():
+    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
@@ -19,16 +20,16 @@ def init_db():
                 author TEXT NOT NULL,
                 isbn TEXT,
                 inv_number TEXT,
-                shelf_nameber TEXT,
+                shelf_number TEXT,
                 status TEXT DEFAULT 'На полке'
             )
         """)
 
-def add_book (title, author, isbn, inv_number, shelf_nameber):
+def add_book (title, author, isbn, inv_number, shelf_number):
     with get_connection() as conn:
         conn.execute(
-            "INSERT INTO books (title, author, isbn, inv_number, shelf_nameber) VALUES (?, ?, ?, ?, ?)",
-            (title, author, isbn, inv_number, shelf_nameber)
+            "INSERT INTO books (title, author, isbn, inv_number, shelf_number) VALUES (?, ?, ?, ?, ?)",
+            (title, author, isbn, inv_number, shelf_number)
         )
         conn.commit()
 
