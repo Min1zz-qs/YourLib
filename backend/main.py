@@ -4,7 +4,8 @@ from flask import (
     render_template, 
     request, 
     redirect, 
-    url_for
+    url_for,
+    abort
 )
 import data
 
@@ -102,7 +103,7 @@ def edit_book(book_id):
         error = None
 
         if request.method == "POST":
-            form_data = get_book_form_data()
+            form_data = get_book_from_data()
             error = validate_book(form_data)
 
             if error is None:
@@ -143,7 +144,7 @@ def edit_book(book_id):
 def delete_book(book_id):
         deleted = data.delete_book(book_id)
 
-        if delited == 0:
+        if deleted == 0:
             abort(404)
 
         return redirect(url_for("index"))
