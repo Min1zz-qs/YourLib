@@ -67,13 +67,13 @@ def get_all_books(
     sort_column = allowed_sort_fields.get(sort_by, "id")
     sort_direction = "ASC" if sort_order == "asc" else "DESC"
 
-    query = "SELECT * FROM books Where 1=1"
+    query = "SELECT * FROM books Where 1=1 "
     params = []
 
     if search:
         query += """
             AND (
-                title LIKE ?
+                 title LIKE ?
                 OR author LIKE ?
                 OR isbn LIKE ?
                 OR inv_number LIKE ?
