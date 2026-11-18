@@ -50,7 +50,7 @@ def validate_book (book):
         book["title"],
         book["author"],
         book["inv_number"],
-        book["Shelf_number"]
+        book["shelf_number"]
     ]):
         return "Заполните все обязательные поля."
 
@@ -86,8 +86,8 @@ def index ():
                     error = "Книга с таким инвентарным номером уже существует."
                 else:
                     raise
-            
-    books = data.get_template(
+    books = data.get_all_books()
+    return render_template(
         "index.html",
         books = books,
         error = error
@@ -109,6 +109,7 @@ def edit_book(book_id):
             if error is None:
                 try:
                     data.update_book(
+                        book_id,
                         form_data["title"],
                         form_data["author"],
                         form_data["isbn"],
